@@ -1,0 +1,79 @@
+﻿@using Transfers.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+
+<!-- Page info -->
+<header class="site-title color">
+    <div class="wrap">
+        <div class="container">
+            <h1>Login</h1>
+            <nav role="navigation" class="breadcrumbs">
+                <ul>
+                    <li><a href="/" title="Home">Home</a></li>
+                    <li>Login</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<!-- //Page info -->
+
+<div class="wrap">
+    <div class="row">
+        <div class="content one-half">
+            <div class="box">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <h4>Use a local account to log in.</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="f-row">
+
+                        <div class="full-width">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="f-row">
+
+                        <div class="full-width">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="f-row">
+                        <div class="full-width check">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="f-row">
+                        <div class="full-width">
+                            <input type="submit" value="Login" class="btn color medium full" />
+                        </div>
+                    </div>
+                    <p>
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")<br />
+                        Dont have an account yet? @Html.ActionLink("Register", "Register")
+                    </p>
+                }
+            </div>
+        </div>
+        <div class="content one-half">
+            <div class="box">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
